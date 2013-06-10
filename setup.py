@@ -28,4 +28,8 @@ setup(name='lhres.util',
       extras_require = {'test': tests_require,
                         'docs': docs_require,
                         },
+      entry_points=("""
+                    [console_scripts]
+                    HL7_segment_parser=lhres.util.HL7_segment_parser:main
+                    """),
 )
