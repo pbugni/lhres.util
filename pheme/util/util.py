@@ -6,7 +6,7 @@ from socket import gethostname
 import os
 import subprocess
 
-from lhres.util.config import Config
+from pheme.util.config import Config
 import ConfigParser
 
 def inProduction():

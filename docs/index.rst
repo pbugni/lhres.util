@@ -1,9 +1,9 @@
-Welcome to lhres.util's documentation!
+Welcome to pheme.util's documentation!
 ======================================
 
-Longitudinal Health Record for Enhanced Surveillance, Utility Library
+Public Health EHR Message Engine (PHEME), Utility Library
 
-.. _lhres_util_module:
+.. _pheme_util_module:
 
 Indices and tables
 ==================

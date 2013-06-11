@@ -4,7 +4,7 @@ import os
 import unittest
 from tempfile import NamedTemporaryFile
 
-from lhres.util.compression import expand_file, zip_file
+from pheme.util.compression import expand_file, zip_file
 
 
 class TestFile(unittest.TestCase):

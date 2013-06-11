@@ -4,7 +4,7 @@ util Package
 :mod:`compression` Module
 -------------------------
 
-.. automodule:: lhres.util.compression
+.. automodule:: pheme.util.compression
     :members:
     :undoc-members:
     :show-inheritance:
@@ -12,7 +12,7 @@ util Package
 :mod:`config` Module
 --------------------
 
-.. automodule:: lhres.util.config
+.. automodule:: pheme.util.config
     :members:
     :undoc-members:
     :show-inheritance:
@@ -20,7 +20,7 @@ util Package
 :mod:`util` Module
 ------------------
 
-.. automodule:: lhres.util.util
+.. automodule:: pheme.util.util
     :members:
     :undoc-members:
     :show-inheritance:
@@ -30,5 +30,5 @@ Subpackages
 
 .. toctree::
 
-    lhres.util.tests
+    pheme.util.tests
 

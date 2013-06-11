@@ -4,7 +4,7 @@ import os
 from tempfile import NamedTemporaryFile
 import unittest
 
-from lhres.util.config import Config, configure_logging
+from pheme.util.config import Config, configure_logging
 
 
 class TestConfig(unittest.TestCase):

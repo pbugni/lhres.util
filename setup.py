@@ -13,13 +13,13 @@ try:
 except IOError:
     README = ''
 
-setup(name='lhres.util',
+setup(name='pheme.util',
       version='13.05',
-      description="Utility functions for LHRES",
+      description="Utility functions for PHEME",
       long_description=README,
       license="BSD-3 Clause",
-      namespace_packages=['lhres'],
-      packages=['lhres.util', ],
+      namespace_packages=['pheme'],
+      packages=['pheme.util', ],
       include_package_data=True,
       install_requires=['setuptools'],
       setup_requires=['nose'],
@@ -30,6 +30,6 @@ setup(name='lhres.util',
                         },
       entry_points=("""
                     [console_scripts]
-                    HL7_segment_parser=lhres.util.HL7_segment_parser:main
+                    HL7_segment_parser=pheme.util.HL7_segment_parser:main
                     """),
 )

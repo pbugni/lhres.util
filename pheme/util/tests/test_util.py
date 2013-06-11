@@ -1,8 +1,8 @@
 from datetime import datetime, date
 
-from lhres.util.util import inProduction, getYearDiff, getDobDatetime
-from lhres.util.util import parseDate, stringFields
-from lhres.util.util import none_safe_min, none_safe_max
+from pheme.util.util import inProduction, getYearDiff, getDobDatetime
+from pheme.util.util import parseDate, stringFields
+from pheme.util.util import none_safe_min, none_safe_max
 
 def test_inProcution():
     """testing - shouldn't be inProduction!"""

@@ -4,7 +4,7 @@ tests Package
 :mod:`test_compression` Module
 ------------------------------
 
-.. automodule:: lhres.util.tests.test_compression
+.. automodule:: pheme.util.tests.test_compression
     :members:
     :undoc-members:
     :show-inheritance:
@@ -12,7 +12,7 @@ tests Package
 :mod:`test_config` Module
 -------------------------
 
-.. automodule:: lhres.util.tests.test_config
+.. automodule:: pheme.util.tests.test_config
     :members:
     :undoc-members:
     :show-inheritance:
@@ -20,7 +20,7 @@ tests Package
 :mod:`test_util` Module
 -----------------------
 
-.. automodule:: lhres.util.tests.test_util
+.. automodule:: pheme.util.tests.test_util
     :members:
     :undoc-members:
     :show-inheritance:

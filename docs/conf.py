@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# lhres.util documentation build configuration file, created by
+# pheme.util documentation build configuration file, created by
 # sphinx-quickstart on Fri May 10 15:41:35 2013.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'lhres.util'
+project = u'pheme.util'
 copyright = u'2013, Paul Bugni'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -167,7 +167,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'LHRESUTILdoc'
+htmlhelp_basename = 'PHEMEUTILdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -186,7 +186,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'LHRESUTIL.tex', u'lhres.util Documentation',
+  ('index', 'PHEMEUTIL.tex', u'pheme.util Documentation',
    u'Paul Bugni', 'manual'),
 ]
 
@@ -216,7 +216,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'lhresutil', u'lhres.util Documentation',
+    ('index', 'phemeutil', u'pheme.util Documentation',
      [u'Paul Bugni'], 1)
 ]
 
@@ -230,8 +230,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'LHRESUTIL', u'lhres.util Documentation',
-   u'Paul Bugni', 'LHRESUTIL', 'One line description of project.',
+  ('index', 'PHEMEUTIL', u'pheme.util Documentation',
+   u'Paul Bugni', 'PHEMEUTIL', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -251,7 +251,7 @@ texinfo_documents = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'lhres.util'
+epub_title = u'pheme.util'
 epub_author = u'Paul Bugni'
 epub_publisher = u'Paul Bugni'
 epub_copyright = u'2013, Paul Bugni'

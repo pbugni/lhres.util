@@ -5,9 +5,9 @@ import re
 
 # Configuration files are processed in order.  Last value found
 # takes precidence
-CONFIG_FILES = ('lhres.conf',
-                '/etc/lhres/lhres.conf',
-                os.path.expanduser('~/.lhres.conf'))
+CONFIG_FILES = ('pheme.conf',
+                '/etc/pheme/pheme.conf',
+                os.path.expanduser('~/.pheme.conf'))
 
 
 class Config(object):

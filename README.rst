@@ -1,7 +1,7 @@
-lhres.util
+pheme.util
 ==========
 
-Longitudinal Health Record for Enhanced Surveilance, utility library
+Public Health EHR Message Engine (PHEME), utility library
 
 License
 -------
