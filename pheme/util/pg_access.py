@@ -1,8 +1,28 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import getpass
 import psycopg2
-import os, sys
+import os
+
+from pheme.util.config import Config
+
+
+def db_connection(section):
+    """Return active database connection (a la SQLAlchemy) for use
+
+    Uses values found in named section of the config file
+    for database, username, etc.
+
+    :param section: block of config file to use for connection details
+
+    NB caller responsible for calling disconnect() on the returned handle.
+
+    """
+    config = Config()
+    database = config.get(section, 'database')
+    user = config.get(section, 'database_user')
+    password = config.get(section, 'database_password')
+    return AlchemyAccess(database=database, user=user, password=password)
+
 
 def _getPgUser():
     """ Returns best guess for postgres (user,password)
@@ -14,8 +34,8 @@ def _getPgUser():
     if 'PGUSER' in os.environ:
         return (os.environ['PGUSER'], os.environ['PGPASSWORD'])
 
-    raise RuntimeError("Set enviornment variable 'PGUSER' to preferred "\
-                           "PostgreSQL user, and 'PGPASSWORD' accordingly")
+    raise RuntimeError("Set enviornment variable 'PGUSER' to preferred "
+                       "PostgreSQL user, and 'PGPASSWORD' accordingly")
 
 
 class AlchemyAccess(object):
@@ -24,7 +44,7 @@ class AlchemyAccess(object):
     """
 
     def __init__(self, database, host='localhost', port=5432,
-        user=None, password=None, verbosity=0):
+                 user=None, password=None, verbosity=0):
         self.dbName = database
         self.dbHost = host
         self.dbPort = port
@@ -39,11 +59,11 @@ class AlchemyAccess(object):
         """ Return the URL used to connect to the database """
         return "postgresql://%(user)s:%(password)s@%(host)s:"\
             "%(port)d/%(database)s" % \
-            {'user':self.dbUser,
-             'password':self.dbPass,
-             'host':self.dbHost,
-             'port':self.dbPort,
-             'database':self.dbName}
+            {'user': self.dbUser,
+             'password': self.dbPass,
+             'host': self.dbHost,
+             'port': self.dbPort,
+             'database': self.dbName}
 
     def _connect(self):
         """ Connect to the database.
@@ -75,6 +95,7 @@ class AlchemyAccess(object):
             print 'ERROR: DestDB still has '\
                 'an open session; be sure to call '\
                 '_disconnect()'
+
 
 class DirectAccess(object):
     """ For the occasion (outside the norm of using SQLAlchemy or
