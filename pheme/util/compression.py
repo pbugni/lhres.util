@@ -17,19 +17,19 @@ def expand_file(filename=None, fileobj=None, zip_protocol=None,
 
     :param zip_protocol: The zip protocol used, 'zip' or 'gzip'
 
-    :param output: Desired return type, accepts 'file' or 'stream' 
-    
+    :param output: Desired return type, accepts 'file' or 'stream'
+
     Returns a cStringIO containing expanded contents, or the full path
     to the file, depending on 'output' parameter.  NB: caller's
-    responsiblity to clean up / delete returned file. 
+    responsiblity to clean up / delete returned file.
 
     """
-    if output not in ('file', 'stream'):  #pragma: no cover
+    if output not in ('file', 'stream'):  # pragma: no cover
         raise ValueError("output types accepted: {file|stream}")
-    if zip_protocol not in ('gzip', 'zip'):  #pragma: no cover
+    if zip_protocol not in ('gzip', 'zip'):  # pragma: no cover
         raise ValueError("zip_protocol types accepted: {gzip|zip}")
     if filename and fileobj:  # pragma: no cover
-        raise ValueError("Only one of filename or fileobj should have "\
+        raise ValueError("Only one of filename or fileobj should have "
                          "a value")
 
     def gzip_expand(filename, fileobj):
@@ -76,8 +76,10 @@ def zip_file(filename, fileobj, zip_protocol):
     :param zip_protocol: The zip protocol to use, 'zip' or 'gzip'
 
     Given a file like object, zip the contents, save to a file and
-    return the path to the zipped file
-    
+    return the path to the zipped file.  The returned filename will
+    match the provided `filename` parameter with the appropriate
+    ".gz" or ".zip" suffix, if not already present.
+
     """
     if zip_protocol == 'gzip':
         if not filename.endswith('.gz'):
@@ -91,8 +93,8 @@ def zip_file(filename, fileobj, zip_protocol):
             filename += '.zip'
         with zipfile.ZipFile(filename, 'w') as zfile:
             # crop off the .zip from the filename
-            zfile.writestr(filename[:-4],fileobj.read())
+            zfile.writestr(filename[:-4], fileobj.read())
         return filename
     else:  # pragma: no cover
-        raise ValueError("can't handle requesed zip protocol: %s" %\
-            zip_protocol)
+        raise ValueError("can't handle requesed zip protocol: %s" %
+                         zip_protocol)

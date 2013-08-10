@@ -35,13 +35,13 @@ class TestFile(unittest.TestCase):
         # Generate a safe filename - deletion is tearDown's job
         if compression is None:
             self.tempfile = NamedTemporaryFile(prefix='unittest',
-                                               delete=False) 
+                                               delete=False)
             self.tempfile.write(self.test_text)
             self.tempfile.close()
         elif compression == 'gzip':
             self.tempfile = NamedTemporaryFile(prefix='unittest',
                                                suffix='.gz',
-                                               delete=False) 
+                                               delete=False)
             self.tempfile.close()
             fh = gzip.open(self.tempfile.name, 'wb')
             fh.write(self.test_text)
@@ -74,12 +74,14 @@ class ZipTests(TestFile):
         result = zip_file(filename, open(filename, 'rb'), 'zip')
         # hand verified the contents were zipped and matched...
         self.assertTrue(os.path.exists(result))
+        self.assertEqual(filename + '.zip', result)
 
     def test_gzip(self):
         filename = self.create_test_file(compression=None)
         result = zip_file(filename, open(filename, 'rb'), 'gzip')
         f = gzip.GzipFile(mode='rb', fileobj=open(result, 'rb'))
         self.assertEqual(f.read(), self.test_text)
+        self.assertEqual(filename + '.gz', result)
 
     def test_gunzip_stream(self):
         compressed = self.create_test_file(compression='gzip')
