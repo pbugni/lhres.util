@@ -1,7 +1,5 @@
 import ConfigParser
-import logging
 import os
-from tempfile import NamedTemporaryFile
 import unittest
 
 from pheme.util.config import Config, configure_logging
@@ -17,7 +15,7 @@ class TestConfig(unittest.TestCase):
     def tearDown(self):
         # make sure we don't leave bogus config files around
         for f in self.config_files:
-            try: 
+            try:
                 os.remove(f)
             except:
                 pass
@@ -89,7 +87,7 @@ class TestConfig(unittest.TestCase):
         c = Config(self.config_files)
         for i in range(len(values)):
             self.assertEquals(float(values[i]),
-                                    c.get(section, key+str(i)))
+                              c.get(section, key+str(i)))
 
     def test_int(self):
         "Looks like an int, should be one (including 0,1)"
@@ -105,18 +103,18 @@ class TestConfig(unittest.TestCase):
         c = Config(self.config_files)
         for i in range(len(values)):
             self.assertEquals(int(values[i]),
-                                    c.get(section, key+str(i)))
+                              c.get(section, key+str(i)))
 
     def test_missing(self):
         "Asking for missing value without a default should raise"
         c = Config(self.config_files)
         self.assertRaises(RuntimeError, c.get, 'section', 'value')
 
-def test_configure_logging():
 
+def test_configure_logging():
     logfile = configure_logging(verbosity=2, logfile='unittest.log',
                                 append=False)
-    # Thanks to nose working so hard to capture logging, it's quit
+    # Thanks to nose working so hard to capture logging, it's quite
     # difficult to test - hand verified.
     assert(logfile == os.path.join(Config().get('general', 'log_dir'),
                                    'unittest.log'))
