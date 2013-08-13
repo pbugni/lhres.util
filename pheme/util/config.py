@@ -47,7 +47,8 @@ class Config(object):
           will
         :param default: value to return if the option and/or section
           aren't found.  Must have a value to avoid exception for an
-          undefined section/option pair.
+          undefined section/option pair.  No coercion performed on
+          default values.
 
         For example, called with (section='DB', option='user') with
         a config file containing::
@@ -61,6 +62,10 @@ class Config(object):
         boolean if the value matches the obvious patterns, i.e. '373'
         returns an int, '12.6' returns a fload and 'true' returns True
 
+        If the value begins with a tilde `~` an attempt to expand as a
+        user's home directory is performed on the value before
+        returning to simplify file access.
+
         """
         try:
             found = self.parser.get(section, option)
@@ -72,6 +77,8 @@ class Config(object):
                 found = True
             elif found.lower().strip() in ('f', 'false'):
                 found = False
+            elif found.startswith('~'):
+                found = os.path.expanduser(found)
         except:
             if default:
                 found = default

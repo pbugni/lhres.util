@@ -110,6 +110,20 @@ class TestConfig(unittest.TestCase):
         c = Config(self.config_files)
         self.assertRaises(RuntimeError, c.get, 'section', 'value')
 
+    def test_tilde(self):
+        "support tilde in directory paths"
+        section = 'SECTION'
+        key = 'unittest'
+        value = "~/tempfile"
+        cp = ConfigParser.RawConfigParser()
+        cp.add_section(section)
+        cp.set(section, key, value)
+        with open(self.config_files[0], 'w') as f:
+            cp.write(f)
+        c = Config(self.config_files)
+        self.assertEquals(os.path.expanduser("~/tempfile"),
+                          c.get(section, key))
+
 
 def test_configure_logging():
     logfile = configure_logging(verbosity=2, logfile='unittest.log',
