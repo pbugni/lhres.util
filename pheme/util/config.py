@@ -1,3 +1,4 @@
+import argparse
 import ConfigParser
 import logging
 import os
@@ -76,8 +77,8 @@ class Config(object):
                 found = default
             else:
                 stmt = "'[%s]%s' not in config file(s): "\
-                              "{'%s'}" % (section, option, 
-                                          ','.join(self.config_files))
+                    "{'%s'}" % (section, option,
+                                ','.join(self.config_files))
                 logging.error(stmt)
                 raise RuntimeError(stmt)
         return found
@@ -121,3 +122,19 @@ def configure_logging(verbosity=0, logfile='generic.log', append=True):
 
     logging.basicConfig(**kwargs)
     return kwargs.get('filename', None)
+
+
+def configvar():
+    """Entry point to echo a configured variable's value
+
+    Useful for shell access, prints the value (if found) to stdout.
+    Raises excpetion if not found in config files.
+
+    """
+    c = Config()
+    a = argparse.ArgumentParser(description="echo value of configuration "
+                                "variable from pheme.config settings")
+    a.add_argument('section', help="section to look in")
+    a.add_argument('variable', help="variable to lookup")
+    args = a.parse_args()
+    print c.get(args.section, args.variable)

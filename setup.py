@@ -31,5 +31,6 @@ setup(name='pheme.util',
       entry_points=("""
                     [console_scripts]
                     HL7_segment_parser=pheme.util.HL7_segment_parser:main
+                    configvar=pheme.util.config:configvar
                     """),
 )
