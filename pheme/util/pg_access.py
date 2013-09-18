@@ -1,7 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import getpass
 import psycopg2
 import os
+import shlex
+import subprocess
 
 from pheme.util.config import Config
 
@@ -172,3 +175,57 @@ class DirectAccess(object):
             print 'ERROR: DbLayer still has '\
                 'an open psyco connection; be sure to '\
                 'call tearDown()'
+
+
+class FilesystemPersistence(object):
+    """Backup and restore database images using filesystem files"""
+
+    def __init__(self, database, user, password, host='localhost'):
+        self.database_name = database
+        self.database_user = user
+        self.database_password = password
+        self.database_host = host
+
+    def _need_sudo(self):
+        """Return sudo prefix when necessary depending on user"""
+        if getpass.getuser() == self.database_user:
+            return ''
+        return 'sudo -u %s ' % self.database_user
+
+    sudo_prefix = property(_need_sudo)
+
+    def persist(self):
+        write_to_file = shlex.split("pg_dump %s" % self.database_name)
+        with open(self._persistent_filename(), 'w') as target_file:
+            subprocess.Popen(write_to_file, env=self.db_enviornment,
+                             stdout=target_file).wait()
+
+    def restore(self):
+        delete_old = shlex.split(self.sudo_prefix + "dropdb %s" %
+                                 self.database_name)
+        subprocess.Popen(delete_old, env=self.db_enviornment).wait()
+        recreate = shlex.split(self.sudo_prefix + "createdb %s" %
+                               self.database_name)
+        subprocess.Popen(recreate, env=self.db_enviornment).wait()
+
+        copy_data = shlex.split(self.sudo_prefix + "psql %s -f %s" %
+                                (self.database_name,
+                                 self._persistent_filename()))
+        with open(os.devnull, 'w') as dev_null:
+            subprocess.Popen(copy_data, env=self.db_enviornment,
+                             stdout=dev_null).wait()
+
+    def _get_db_enviornment(self):
+        """Return dictionary of environment setting for db auth"""
+        return {'PGUSER': self.database_user,
+                'PGPASSWORD': self.database_password,
+                'PGHOST': self.database_host}
+
+    db_enviornment = property(_get_db_enviornment)
+
+    def _persistent_filename(self):
+        """Returns the full path and name of filesystem file"""
+        base = os.path.abspath(
+            os.path.join(os.path.dirname(__file__),
+                         "../../var"))
+        return os.path.join(base, '%s.sql' % self.database_name)
