@@ -26,7 +26,10 @@ choice::
 Running
 -------
 
-The executable programs provided by ``pheme.util`` are listed under [console_scripts] within the project's setup.py file.  All take the standard help options [-h, --help].  Invoke with help for more information::
+The executable programs provided by ``pheme.util`` are listed under
+[console_scripts] within the project's setup.py file.  All take the
+standard help options [-h, --help].  Invoke with help for more
+information::
 
     HL7_segment_parser --help
 
