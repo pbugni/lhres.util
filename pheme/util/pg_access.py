@@ -9,6 +9,22 @@ import subprocess
 from pheme.util.config import Config
 
 
+def db_params(section):
+    """Return dict of database connection values from named config section
+
+    Returned dict includes:
+    - user
+    - password
+    - database  (name of database)
+
+    """
+    config = Config()
+    database = config.get(section, 'database')
+    user = config.get(section, 'database_user')
+    password = config.get(section, 'database_password')
+    return {'user': user, 'password': password, 'database': database}
+
+
 def db_connection(section):
     """Return active database connection (a la SQLAlchemy) for use
 
@@ -20,11 +36,7 @@ def db_connection(section):
     NB caller responsible for calling disconnect() on the returned handle.
 
     """
-    config = Config()
-    database = config.get(section, 'database')
-    user = config.get(section, 'database_user')
-    password = config.get(section, 'database_password')
-    return AlchemyAccess(database=database, user=user, password=password)
+    return AlchemyAccess(**db_params(section))
 
 
 def _getPgUser():
@@ -46,7 +58,7 @@ class AlchemyAccess(object):
 
     """
 
-    def __init__(self, database, host='localhost', port=5432,
+    def __init__(self, database='', host='localhost', port=5432,
                  user=None, password=None, verbosity=0):
         self.dbName = database
         self.dbHost = host
