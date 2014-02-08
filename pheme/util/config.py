@@ -3,6 +3,7 @@ import ConfigParser
 import logging
 import os
 import re
+import sys
 
 # Configuration files are processed in order.  Last value found
 # takes precidence
@@ -97,8 +98,8 @@ def configure_logging(verbosity=0, logfile='generic.log', append=True):
     :param verbosity: used to set the desired level of logging
                       {0:WARNING, 1:INFO, 2:DEBUG}
     :param logfile: should be set to the desired filename in the
-                    configured log directory.  value of 'stderr'
-                    overrides use of a file - logging will hit stderr.
+                    configured log directory.  value of 'stdout' or
+                    'stderr' overrides use of a file.
     :param append: if true (default) the log file will be appended to; if
                    set false the logfile will be reset on execution
 
@@ -115,7 +116,7 @@ def configure_logging(verbosity=0, logfile='generic.log', append=True):
         loglevel = logging.DEBUG
     kwargs['level'] = loglevel
 
-    if logfile != 'stderr':
+    if logfile not in ('stdout', 'stderr'):
         try:
             logdir = os.environ['INHS_LOGDIR']
         except KeyError:
@@ -126,8 +127,16 @@ def configure_logging(verbosity=0, logfile='generic.log', append=True):
                 raise "Neither env var INHS_LOGDIR nor config "\
                       "[general]log_dir defined - can't continue"
         kwargs['filename'] = os.path.join(logdir, logfile)
+        logging.basicConfig(**kwargs)
+    else:
+        root = logging.getLogger()
+        stream = getattr(sys, logfile)
+        so = logging.StreamHandler(stream)
+        so.setLevel(level=kwargs['level'])
+        formatter = logging.Formatter(kwargs['format'], kwargs['datefmt'])
+        so.setFormatter(formatter)
+        root.addHandler(so)
 
-    logging.basicConfig(**kwargs)
     return kwargs.get('filename', None)
 
 

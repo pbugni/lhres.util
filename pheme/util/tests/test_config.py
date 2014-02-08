@@ -1,4 +1,5 @@
 import ConfigParser
+import logging
 import os
 import unittest
 
@@ -128,6 +129,7 @@ class TestConfig(unittest.TestCase):
 def test_configure_logging():
     logfile = configure_logging(verbosity=2, logfile='unittest.log',
                                 append=False)
+    logging.debug("just testing")
     # Thanks to nose working so hard to capture logging, it's quite
     # difficult to test - hand verified.
     assert(logfile == os.path.join(Config().get('general', 'log_dir'),
